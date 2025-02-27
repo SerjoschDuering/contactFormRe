@@ -58,17 +58,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateFieldStatus(inputElement, value, autoFill = false) {
     inputElement.value = value;
     inputElement.classList.remove('field-success', 'field-fail', 'field-missing');
-    if (value && value.trim().length > 0) {
-      inputElement.classList.add('field-success');  // pastel green background for success
+  
+    // If the value is non‑empty and does not contain "unable to detect", consider it valid.
+    if (value && value.trim().length > 0 && !value.toLowerCase().includes("unable to detect")) {
+      inputElement.classList.add('field-success'); // Mark as success (green background)
+      flashField(inputElement); // Flash green
+      // After the flash animation, remove the success styling so the field returns to normal.
+      setTimeout(() => {
+        inputElement.classList.remove('field-success');
+      }, 1000);
     } else {
-      inputElement.classList.add('field-fail');       // pastel red for failure (unable to detect)
+      // If the value is empty or includes "unable to detect",
+      // mark the field with error styling so that it remains highlighted for editing.
+      inputElement.classList.add('field-fail');
     }
-    if (autoFill) {
-      flashSignature(inputElement);
-    } else {
-      flashField(inputElement);
-    }
-    // Optionally, you can also keep a per‑field state here if needed.
   }
   
   // Check required fields.
@@ -176,18 +179,18 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
           console.log("API response received:", data);
-          // Assume data is an array with one object; if detection fails for a field, result will be empty.
+          // Assume data is an array with one object; if detection fails for a field, result will be empty or indicate failure.
           if (Array.isArray(data) && data.length > 0) {
             const result = data[0];
-            updateFieldStatus(nameInput, result.name || "", true);
+            updateFieldStatus(nameInput, result.name || "");
             state.formData.name = result.name || "";
-            updateFieldStatus(phoneInput, result.phone || "", true);
+            updateFieldStatus(phoneInput, result.phone || "");
             state.formData.phone = result.phone || "";
-            updateFieldStatus(emailInput, result.email || "", true);
+            updateFieldStatus(emailInput, result.email || "");
             state.formData.email = result.email || "";
-            updateFieldStatus(companyInput, result.company || "", true);
+            updateFieldStatus(companyInput, result.company || "");
             state.formData.company = result.company || "";
-            updateFieldStatus(positionInput, result.position || "", true);
+            updateFieldStatus(positionInput, result.position || "");
             state.formData.position = result.position || "";
           }
         })
