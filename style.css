@@ -300,10 +300,17 @@ input:disabled::after, textarea:disabled::after {
 }
 
 /* Flash animation for updated fields */
+/* Flash animation for updated fields */
 @keyframes flash-green {
-  0% { background-color: #d4edda; }
-  50% { background-color: #c3e6cb; }
-  100% { background-color: transparent; }
+  0% {
+    background-color: #d4edda;
+  }
+  50% {
+    background-color: #c3e6cb;
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 .flash-green {
   animation: flash-green 1s ease;
@@ -311,20 +318,32 @@ input:disabled::after, textarea:disabled::after {
 
 /* Flash animation for signature color */
 @keyframes flash-primary {
-  0% { background-color: rgba(96,58,255,0.3); }
-  50% { background-color: rgba(96,58,255,0.6); }
-  100% { background-color: transparent; }
+  0% {
+    background-color: rgba(96,58,255,0.3);
+  }
+  50% {
+    background-color: rgba(96,58,255,0.6);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 .flash-signature {
   animation: flash-primary 1s ease;
 }
 
-/* Field success and failure styles for auto-filled fields */
+/* Updated styles for auto-filled fields */
+
+/* When auto-detection succeeds */
 .field-success {
   border: 2px solid green !important;
+  background-color: #e0fdea;  /* Subtle green background */
 }
+
+/* When auto-detection fails */
 .field-fail {
   border: 2px solid red !important;
+  background-color: #fde0e0;  /* Subtle red background */
 }
 
 #interest {
