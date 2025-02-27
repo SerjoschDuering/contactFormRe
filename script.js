@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
       email: "",
       company: "",
       position: "",
-      tags: []
+      tags: [],
+      contacted: ""
     }
   };
 
@@ -29,16 +30,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const emailInput = document.getElementById('email');
   const companyInput = document.getElementById('company');
   const positionInput = document.getElementById('position');
+  const contactedSelect = document.getElementById('contacted');
   const tagElements = document.querySelectorAll('.tag');
   const priorityFields = document.getElementById('priority-fields');
   const priorityPrompt = document.getElementById('priority-prompt');
 
-  // Utility function to flash a field.
+  // Utility function to flash a field (green flash)
   function flashField(field) {
     field.classList.add('flash-green');
     setTimeout(() => {
       field.classList.remove('flash-green');
     }, 1000);
+  }
+
+  // New utility function to flash the text area in signature color
+  function flashSignature(field) {
+    field.classList.add('flash-signature');
+    setTimeout(() => {
+      field.classList.remove('flash-signature');
+    }, 1000);
+  }
+
+  // Utility function to update field status based on auto-fill result
+  function updateFieldStatus(inputElement, value) {
+    inputElement.value = value;
+    inputElement.classList.remove('field-success', 'field-fail');
+    if (value && value.trim().length > 0) {
+      inputElement.classList.add('field-success');
+    } else {
+      inputElement.classList.add('field-fail');
+    }
   }
 
   // Function to update UI based on state.
@@ -73,6 +94,9 @@ document.addEventListener('DOMContentLoaded', () => {
   emailInput.addEventListener('input', (e) => state.formData.email = e.target.value);
   companyInput.addEventListener('input', (e) => state.formData.company = e.target.value);
   positionInput.addEventListener('input', (e) => state.formData.position = e.target.value);
+  if (contactedSelect) {
+    contactedSelect.addEventListener('change', (e) => state.formData.contacted = e.target.value);
+  }
 
   // Handle tag selection.
   tagElements.forEach(tagEl => {
@@ -88,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Handle image upload: call the API endpoint and update form fields.
+  // Handle image upload: process image and call API for auto-fill.
   cardUpload.addEventListener('change', (e) => {
     const file = e.target.files[0];
     console.log("File upload triggered.");
@@ -106,19 +130,20 @@ document.addEventListener('DOMContentLoaded', () => {
         state.processing = true;
         updateUI();
 
-        // Skip showing any priority message.
+        // Hide the priority prompt and activate the priority fields.
         if (priorityPrompt) {
           priorityPrompt.style.display = 'none';
         }
-        // Move up the two form fields.
         if (priorityFields) {
           priorityFields.classList.add('active');
         }
-        // Change the headline "What are you interested in?" to signature color.
+        // Change the headline color of the interest field.
         const interestLabel = document.querySelector("label[for='interest']");
         if (interestLabel) {
           interestLabel.style.color = "var(--primary-color)";
         }
+        // Flash the text area in signature color to encourage filling.
+        flashSignature(interestInput);
         
         // Call API endpoint with the base64 image.
         fetch('https://run8n.xyz/webhook/businesCard', {
@@ -136,33 +161,19 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
           console.log("API response received:", data);
-          // Now, expecting an array with one object.
+          // Expecting an array with one object.
           if (Array.isArray(data) && data.length > 0) {
             const result = data[0];
+            updateFieldStatus(nameInput, result.name || "");
             state.formData.name = result.name || "";
-            nameInput.value = result.name || "";
-            flashField(nameInput);
-            
-            if (result.phone) {
-              state.formData.phone = result.phone;
-              phoneInput.value = result.phone;
-              flashField(phoneInput);
-            }
-            if (result.email) {
-              state.formData.email = result.email;
-              emailInput.value = result.email;
-              flashField(emailInput);
-            }
-            if (result.company) {
-              state.formData.company = result.company;
-              companyInput.value = result.company;
-              flashField(companyInput);
-            }
-            if (result.position) {
-              state.formData.position = result.position;
-              positionInput.value = result.position;
-              flashField(positionInput);
-            }
+            updateFieldStatus(phoneInput, result.phone || "");
+            state.formData.phone = result.phone || "";
+            updateFieldStatus(emailInput, result.email || "");
+            state.formData.email = result.email || "";
+            updateFieldStatus(companyInput, result.company || "");
+            state.formData.company = result.company || "";
+            updateFieldStatus(positionInput, result.position || "");
+            state.formData.position = result.position || "";
           }
         })
         .catch(error => {
@@ -177,13 +188,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Handle form submission, triggering the second API call.
+  // Handle form submission: open modal immediately and redirect on API response.
   businessForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log("Submitting final form data with b64 encoded image:", JSON.stringify(state.formData, null, 2));
-    
+    // Open modal immediately.
+    state.submitted = true;
+    updateUI();
+
     try {
-      // Second API call: send complete form data (including the base64 encoded image) to the endpoint.
       const response = await fetch('https://run8n.xyz/webhook/storeBusinesCard', {
         method: 'POST',
         headers: {
@@ -200,13 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error("Error during final form submission:", error);
     }
     
-    state.submitted = true;
-    updateUI();
-    
-    // Redirect the user after 5 seconds.
-    setTimeout(() => {
-      window.location.href = "https://rehub.team";
-    }, 5000);
+    // Redirect immediately after the API call finishes.
+    window.location.href = "https://rehub.team";
   });
 
   // Handle closing the thank-you modal and resetting the form.
@@ -223,11 +230,16 @@ document.addEventListener('DOMContentLoaded', () => {
       email: "",
       company: "",
       position: "",
-      tags: []
+      tags: [],
+      contacted: ""
     };
     tagElements.forEach(tagEl => tagEl.classList.remove('active'));
     if (priorityFields) {
       priorityFields.classList.remove('active');
+    }
+    // Reset the contacted select field to its default.
+    if (contactedSelect) {
+      contactedSelect.selectedIndex = 0;
     }
     updateUI();
   });

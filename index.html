@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,8 +10,8 @@
   <div class="container">
     <!-- Branding Header -->
     <header class="header">
-        <img src="rehubLogo.jpg" alt="Rehub Logo" class="logo">
-        <h1 class="title">Stay in touch with us!</h1>
+      <img src="rehubLogo.jpg" alt="Rehub Logo" class="logo">
+      <h1 class="title">Stay in touch with us!</h1>
     </header>
 
     <!-- Upload Section -->
@@ -34,42 +34,58 @@
 
     <!-- Manual Input Form -->
     <form id="business-form">
-      <!-- Priority Container: Interest & Tags -->
+      <!-- Priority Container: Gesprächsnotizen & Interessensauswahl -->
       <div id="priority-container">
         <div id="priority-prompt" class="priority-prompt"></div>
         <div id="priority-fields" class="priority-fields">
           <div class="form-group">
-            <label for="interest">What are you interested in?</label>
-            <textarea id="interest" name="interest" placeholder="Enter discussion topic"></textarea>
+            <label for="interest">Worüber waren wir im Gespräch?</label>
+            <textarea id="interest" name="interest" placeholder="Wie sind wir verblieben? Was sollten wir bei unserem nächsten Kontakt berücksichtigen?"></textarea>
           </div>
+          <!-- Subtle heading for selectable options -->
+          <p class="options-heading">Bitte wählen Sie Ihre Optionen:</p>
           <div class="tags">
-            <span class="tag" data-tag="business">Business</span>
-            <span class="tag" data-tag="personal">Personal</span>
+            <span class="tag" data-tag="rehuh_nutzung">rehuh Nutzung</span>
+            <span class="tag" data-tag="rehuh_integration">rehuh Integration / Partnerschaft</span>
+            <span class="tag" data-tag="modulbaugenerator">Modulbaugenerator</span>
+            <span class="tag" data-tag="customized_entwicklung">customized Entwicklung</span>
+            <span class="tag" data-tag="datenmodelle">Datenmodelle / KI-Szenarien</span>
+            <span class="tag" data-tag="beratung_prozesse">Beratung Prozesse</span>
+            <span class="tag" data-tag="beratung_digitalisierung">Beratung Digitalisierung</span>
           </div>
         </div>
       </div>
 
       <!-- Other Manual Fields -->
       <div id="other-fields">
+        <!-- Moved "Mit wem haben Sie gesprochen?" to top -->
+        <div class="form-group">
+          <label for="contacted">Mit wem haben Sie gesprochen?</label>
+          <select id="contacted" name="contacted">
+            <option value="" disabled selected>Bitte auswählen</option>
+            <option value="Hans">Hans</option>
+            <option value="Franz">Franz</option>
+          </select>
+        </div>
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Your name">
+          <input type="text" id="name" name="name" placeholder="Ihr Name">
         </div>
         <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" placeholder="Phone number">
+          <label for="phone">Handynummer</label>
+          <input type="tel" id="phone" name="phone" placeholder="Ihre Handynummer">
         </div>
         <div class="form-group">
-          <label for="email">eMail</label>
-          <input type="email" id="email" name="email" placeholder="Email address">
+          <label for="email">E-Mail</label>
+          <input type="email" id="email" name="email" placeholder="Ihre E-Mail-Adresse">
         </div>
         <div class="form-group">
-          <label for="company">Company</label>
-          <input type="text" id="company" name="company" placeholder="Company name">
+          <label for="company">Unternehmen</label>
+          <input type="text" id="company" name="company" placeholder="Ihr Unternehmen">
         </div>
         <div class="form-group">
           <label for="position">Position</label>
-          <input type="text" id="position" name="position" placeholder="Job position">
+          <input type="text" id="position" name="position" placeholder="Ihre Position">
         </div>
       </div>
       <button type="submit" class="submit-button">Submit</button>

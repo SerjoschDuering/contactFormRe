@@ -1,318 +1,346 @@
 :root {
-    --primary-color: #603aff;   /* Strong signature color: rgb(96,58,255) */
-    --background-color: #faf6fe; /* Signature background: rgb(250,246,254) */
-    --secondary-color: #b490ff;  /* A mid-tone accent color */
-  }
-  
-  /* Global hidden class */
-  .hidden {
-    display: none !important;
-  }
-  
-  /* Reset & basic styles */
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  body {
-    font-family: Arial, sans-serif;
-    background: var(--background-color);
-    color: #333;
-    padding: 20px;
-  }
-  .container {
-    max-width: 480px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Header/Branding styles */
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  .header .logo {
-    width: 80px;
-    height: auto;
-    margin-right: 10px;
-  }
-  .header .title {
-    font-size: 20px;
-    color: var(--primary-color);
-    margin: 0;
-  }
-  
-  /* Upload widget styles */
-  .upload-widget {
-    width: 250px;
-    height: 150px;
-    border: 2px dashed var(--primary-color);
-    border-radius: 12px;
-    display: block;
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    background: #f9f9f9;
-    margin: 0 auto 30px;
-  }
-  .upload-widget.processed {
-    border: 4px solid green;
-  }
-  .upload-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    color: var(--primary-color);
-  }
-  .upload-content img.preview-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-  
-  /* Overlay for processing state on upload widget */
-  .upload-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    animation: glow 2s ease-in-out infinite;
-  }
-  .upload-overlay.hidden {
-    display: none;
-  }
-  @keyframes glow {
-    0% { box-shadow: 0 0 5px 0 rgba(96, 58, 255, 0.5); }
-    50% { box-shadow: 0 0 20px 5px rgba(96, 58, 255, 0.8); }
-    100% { box-shadow: 0 0 5px 0 rgba(96, 58, 255, 0.5); }
-  }
-  
-  /* Widget spinner */
-  .widget-spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--primary-color);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  /* Separator */
-  .separator {
-    text-align: center;
-    margin: 30px 0;
-    position: relative;
-  }
-  .separator:before,
-  .separator:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 40%;
-    height: 1px;
-    background: #ddd;
-  }
-  .separator:before { left: 0; }
-  .separator:after { right: 0; }
-  .separator span {
-    padding: 0 10px;
-    background: #fff;
-    color: #888;
-    font-size: 14px;
-  }
-  
-  /* Form styles */
-  form .form-group {
-    margin-bottom: 15px;
-  }
-  form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  form input[type="text"],
-  form input[type="email"],
-  form input[type="tel"],
-  form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 15px;
-  }
-  form textarea {
-    resize: vertical;
-  }
-  
-  /* Disabled input shimmer effect */
-  input:disabled, textarea:disabled {
-    background-color: #f0f0f0;
-    position: relative;
-    overflow: hidden;
-  }
-  input:disabled::after, textarea:disabled::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150px;
-    width: 150px;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-    animation: loadingShine 1s linear infinite;
-    pointer-events: none;
-  }
-  @keyframes loadingShine {
-    0% { left: -150px; }
-    100% { left: 100%; }
-  }
-  
-  /* Priority container (Interest & Tags) */
-  .priority-fields {
-    transition: transform 0.5s ease;
-    transform: translateY(0);
-  }
-  
-  .priority-fields.active {
-    transform: translateY(-20px);
-  }
-  
-  /* Ensure that the "What are you interested in?" headline (the label)
-     reflects the signature color (indigo) when the fields are active */
-  #priority-container label[for="interest"] {
-    transition: color 0.5s ease;
-  }
-  }
-/* Updated priority-prompt styles */
-.priority-prompt {
-    text-align: center;
-    margin-bottom: 15px;  /* Increased spacing between prompt and form fields */
-    font-size: 13px;      /* Reduced font size for a subtler appearance */
-    color: var(--primary-color);
-    opacity: 1;
-    transition: opacity 0.5s ease;
-  }
-  
-  /* Tags */
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .tag {
-    background: #eee;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  .tag.active {
-    background: var(--primary-color);
-    color: #fff;
-  }
-  
-  /* Other fields container */
-  #other-fields {
-    margin-top: 30px;
-  }
-  
-  /* Submit button */
-  .submit-button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    background: var(--primary-color);
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  .submit-button:hover {
-    background: var(--secondary-color);
-  }
-  
-  /* Modal styles */
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
-  .modal.hidden {
-    display: none;
-  }
-  .modal-content {
-    width: 500px;
-    max-width: 90%;
-    background: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    text-align: center;
-    position: relative;
-  }
-  .modal-logo {
-    display: block;
-    margin: 0 auto 20px;
-    width: 80px;
-    height: auto;
-  }
-  .modal-close {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  /* Flash animation for updated fields */
-  @keyframes flash-green {
-    0% {
-      background-color: #d4edda;
-    }
-    50% {
-      background-color: #c3e6cb;
-    }
-    100% {
-      background-color: transparent;
-    }
-  }
-  .flash-green {
-    animation: flash-green 1s ease;
-  }
+  --primary-color: #603aff;   /* Strong signature color: rgb(96,58,255) */
+  --background-color: #faf6fe; /* Signature background: rgb(250,246,254) */
+  --secondary-color: #b490ff;  /* A mid-tone accent color */
+}
 
-  #interest {
-    height: 80px;         /* Increase height for multiple lines */
-    padding: 12px;         /* Adjust padding for better spacing */
-    font-size: 13px;       /* Adjust font size as needed */
-    resize: vertical;      /* Allow the user to resize vertically only */
-  }
+/* Global hidden class */
+.hidden {
+  display: none !important;
+}
+
+/* Reset & basic styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: var(--background-color);
+  color: #333;
+  padding: 20px;
+}
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Header/Branding styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.header .logo {
+  width: 80px;
+  height: auto;
+  margin-right: 10px;
+}
+.header .title {
+  font-size: 20px;
+  color: var(--primary-color);
+  margin: 0;
+}
+
+/* Upload widget styles */
+.upload-widget {
+  width: 250px;
+  height: 150px;
+  border: 2px dashed var(--primary-color);
+  border-radius: 12px;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  background: #f9f9f9;
+  margin: 0 auto 30px;
+}
+.upload-widget.processed {
+  border: 4px solid green;
+}
+.upload-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--primary-color);
+}
+.upload-content img.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Overlay for processing state on upload widget */
+.upload-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  animation: glow 2s ease-in-out infinite;
+}
+.upload-overlay.hidden {
+  display: none;
+}
+@keyframes glow {
+  0% { box-shadow: 0 0 5px 0 rgba(96, 58, 255, 0.5); }
+  50% { box-shadow: 0 0 20px 5px rgba(96, 58, 255, 0.8); }
+  100% { box-shadow: 0 0 5px 0 rgba(96, 58, 255, 0.5); }
+}
+
+/* Widget spinner */
+.widget-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Separator */
+.separator {
+  text-align: center;
+  margin: 30px 0;
+  position: relative;
+}
+.separator:before,
+.separator:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #ddd;
+}
+.separator:before { left: 0; }
+.separator:after { right: 0; }
+.separator span {
+  padding: 0 10px;
+  background: #fff;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Form styles */
+form .form-group {
+  margin-bottom: 15px;
+}
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+form input[type="text"],
+form input[type="email"],
+form input[type="tel"],
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+form textarea {
+  resize: vertical;
+}
+
+/* Disabled input shimmer effect */
+input:disabled, textarea:disabled {
+  background-color: #f0f0f0;
+  position: relative;
+  overflow: hidden;
+}
+input:disabled::after, textarea:disabled::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: loadingShine 1s linear infinite;
+  pointer-events: none;
+}
+@keyframes loadingShine {
+  0% { left: -150px; }
+  100% { left: 100%; }
+}
+
+/* Priority container (Interest & Tags) */
+.priority-fields {
+  transition: transform 0.5s ease;
+  transform: translateY(0);
+}
+.priority-fields.active {
+  transform: translateY(-20px);
+}
+/* Transition color for the "Worüber waren wir im Gespräch?" label when active */
+#priority-container label[for="interest"] {
+  transition: color 0.5s ease;
+}
+
+/* Priority prompt styles */
+.priority-prompt {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 13px;
+  color: var(--primary-color);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+/* Subtle heading for selectable options (Tags heading) */
+.options-heading {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* Tags */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tag {
+  background: #eee;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.tag.active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Other fields container */
+#other-fields {
+  margin-top: 30px;
+}
+
+/* Submit button */
+.submit-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.submit-button:hover {
+  background: var(--secondary-color);
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  width: 500px;
+  max-width: 90%;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+}
+.modal-logo {
+  display: block;
+  margin: 0 auto 20px;
+  width: 80px;
+  height: auto;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Flash animation for updated fields */
+@keyframes flash-green {
+  0% { background-color: #d4edda; }
+  50% { background-color: #c3e6cb; }
+  100% { background-color: transparent; }
+}
+.flash-green {
+  animation: flash-green 1s ease;
+}
+
+/* Flash animation for signature color */
+@keyframes flash-primary {
+  0% { background-color: rgba(96,58,255,0.3); }
+  50% { background-color: rgba(96,58,255,0.6); }
+  100% { background-color: transparent; }
+}
+.flash-signature {
+  animation: flash-primary 1s ease;
+}
+
+/* Field success and failure styles for auto-filled fields */
+.field-success {
+  border: 2px solid green !important;
+}
+.field-fail {
+  border: 2px solid red !important;
+}
+
+#interest {
+  height: 80px;         /* Increase height for multiple lines */
+  padding: 12px;         /* Adjust padding for better spacing */
+  font-size: 13px;       /* Adjust font size as needed */
+  resize: vertical;      /* Allow users to resize vertically */
+}
+
+/* Dropdown styling */
+select {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin-top: 5px;
+}
