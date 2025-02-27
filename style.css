@@ -151,7 +151,7 @@ h1 {
 
 /* Form styles */
 form .form-group {
-  margin-bottom: 20px; /* Increased spacing between fields */
+  margin-bottom: 30px; /* Increased spacing between fields */
 }
 form label {
   display: block;
