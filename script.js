@@ -54,12 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Utility function to update field status based on auto-fill result
   function updateFieldStatus(inputElement, value) {
     inputElement.value = value;
-    inputElement.classList.remove('field-success', 'field-fail');
+    inputElement.classList.remove('field-success', 'field-fail'); // Remove previous statuses
     if (value && value.trim().length > 0) {
-      inputElement.classList.add('field-success');
+      inputElement.classList.add('field-success'); // Valid auto-fill value
     } else {
-      inputElement.classList.add('field-fail');
+      inputElement.classList.add('field-fail'); // Detection failed (invalid/empty)
     }
+    // Flash the input so the user notices the update:
+    flashField(inputElement);
   }
 
   // Function to update UI based on state.
