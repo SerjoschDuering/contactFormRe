@@ -27,7 +27,7 @@ body {
   background: #fff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 h1 {
   text-align: center;
@@ -136,8 +136,12 @@ h1 {
   height: 1px;
   background: #ddd;
 }
-.separator:before { left: 0; }
-.separator:after { right: 0; }
+.separator:before {
+  left: 0;
+}
+.separator:after {
+  right: 0;
+}
 .separator span {
   padding: 0 10px;
   background: #fff;
@@ -169,19 +173,21 @@ form textarea {
 }
 
 /* Disabled input shimmer effect */
-input:disabled, textarea:disabled {
+input:disabled,
+textarea:disabled {
   background-color: #f0f0f0;
   position: relative;
   overflow: hidden;
 }
-input:disabled::after, textarea:disabled::after {
+input:disabled::after,
+textarea:disabled::after {
   content: '';
   position: absolute;
   top: 0;
   left: -150px;
   width: 150px;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   animation: loadingShine 1s linear infinite;
   pointer-events: none;
 }
@@ -300,17 +306,10 @@ input:disabled::after, textarea:disabled::after {
 }
 
 /* Flash animation for updated fields */
-/* Flash animation for updated fields */
 @keyframes flash-green {
-  0% {
-    background-color: #d4edda;
-  }
-  50% {
-    background-color: #c3e6cb;
-  }
-  100% {
-    background-color: transparent;
-  }
+  0% { background-color: #d4edda; }
+  50% { background-color: #c3e6cb; }
+  100% { background-color: transparent; }
 }
 .flash-green {
   animation: flash-green 1s ease;
@@ -318,32 +317,29 @@ input:disabled::after, textarea:disabled::after {
 
 /* Flash animation for signature color */
 @keyframes flash-primary {
-  0% {
-    background-color: rgba(96,58,255,0.3);
-  }
-  50% {
-    background-color: rgba(96,58,255,0.6);
-  }
-  100% {
-    background-color: transparent;
-  }
+  0% { background-color: rgba(96,58,255,0.3); }
+  50% { background-color: rgba(96,58,255,0.6); }
+  100% { background-color: transparent; }
 }
 .flash-signature {
   animation: flash-primary 1s ease;
 }
 
 /* Updated styles for auto-filled fields */
-
 /* When auto-detection succeeds */
 .field-success {
   border: 2px solid green !important;
   background-color: #e0fdea;  /* Subtle green background */
 }
-
 /* When auto-detection fails */
 .field-fail {
   border: 2px solid red !important;
   background-color: #fde0e0;  /* Subtle red background */
+}
+
+/* New style for missing fields (required field not filled or invalid) */
+.field-missing {
+  background-color: #fde0e0 !important;  /* Pastel red */
 }
 
 #interest {
