@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tags: [],
       contacted: ""
     }
+    // If needed you could also keep per‑field auto‑fill status here.
   };
 
   // DOM Elements
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const priorityPrompt = document.getElementById('priority-prompt');
   const submitButton = document.querySelector('.submit-button');
   
-  // Utility function to flash a field (green flash)
+  // Utility function to flash a field (green flash) – kept for non‑auto‑fill uses.
   function flashField(field) {
     field.classList.add('flash-green');
     setTimeout(() => {
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
-  // Utility function to flash the text area in signature color
+  // Utility function to flash a field with our signature (purple flash)
   function flashSignature(field) {
     field.classList.add('flash-signature');
     setTimeout(() => {
@@ -52,22 +53,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
-  // Updated updateFieldStatus utility function:
-  // Sets the input value, adds success/fail class, flashes the field, then re-checks required fields.
-  function updateFieldStatus(inputElement, value) {
+  // Updated updateFieldStatus: now accepts a third parameter (autoFill) so that
+  // auto‑detected values flash in signature (purple) color.
+  function updateFieldStatus(inputElement, value, autoFill = false) {
     inputElement.value = value;
     inputElement.classList.remove('field-success', 'field-fail', 'field-missing');
     if (value && value.trim().length > 0) {
-      inputElement.classList.add('field-success');  // Valid auto-fill value
+      inputElement.classList.add('field-success');  // pastel green background for success
     } else {
-      inputElement.classList.add('field-fail');  // Detection failed – user must enter value manually
+      inputElement.classList.add('field-fail');       // pastel red for failure (unable to detect)
     }
-    flashField(inputElement);
+    if (autoFill) {
+      flashSignature(inputElement);
+    } else {
+      flashField(inputElement);
+    }
+    // Optionally, you can also keep a per‑field state here if needed.
   }
   
   // Check required fields.
-  // For each required field, if its value is missing or if it has an auto-detect failure,
-  // mark it with .field-missing and collect those elements.
   function validateRequiredFields() {
     const requiredFields = [
       { element: nameInput, label: "Name" },
@@ -93,34 +97,33 @@ document.addEventListener('DOMContentLoaded', () => {
   interestInput.addEventListener('input', (e) => {
     state.formData.interest = e.target.value;
   });
+  
   nameInput.addEventListener('input', (e) => {
     state.formData.name = e.target.value;
-    // Remove error marking once the user types.
-    if (e.target.value.trim().length > 0) {
-      e.target.classList.remove('field-missing');
-    }
+    // When user makes changes, clear any auto-fill styles.
+    e.target.classList.remove('field-missing', 'field-success', 'field-fail');
   });
+  
   phoneInput.addEventListener('input', (e) => {
     state.formData.phone = e.target.value;
-    if (e.target.value.trim().length > 0) {
-      e.target.classList.remove('field-missing');
-    }
+    e.target.classList.remove('field-missing', 'field-success', 'field-fail');
   });
+  
   emailInput.addEventListener('input', (e) => {
     state.formData.email = e.target.value;
-    if (e.target.value.trim().length > 0) {
-      e.target.classList.remove('field-missing');
-    }
+    e.target.classList.remove('field-missing', 'field-success', 'field-fail');
   });
+  
   companyInput.addEventListener('input', (e) => {
     state.formData.company = e.target.value;
-    if (e.target.value.trim().length > 0) {
-      e.target.classList.remove('field-missing');
-    }
+    e.target.classList.remove('field-missing', 'field-success', 'field-fail');
   });
+  
   positionInput.addEventListener('input', (e) => {
     state.formData.position = e.target.value;
+    e.target.classList.remove('field-missing', 'field-success', 'field-fail');
   });
+  
   if (contactedSelect) {
     contactedSelect.addEventListener('change', (e) => {
       state.formData.contacted = e.target.value;
@@ -136,19 +139,33 @@ document.addEventListener('DOMContentLoaded', () => {
                                   .map(el => el.getAttribute('data-tag'));
     });
   });
-
-  // Simulated auto-fill from API call upon image upload.
+  
+  // When the user uploads an image:
+  //  • Show the image immediately in the upload widget.
+  //  • Keep the loading spinner visible.
+  //  • Move the “Worüber waren wir im Gespräch?” text area (and tags) upward
+  //    and change the label color to our signature color.
   cardUpload.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Immediately show preview image in the upload widget.
+      const previewURL = URL.createObjectURL(file);
+      uploadContent.innerHTML = `<img class="preview-image" src="${previewURL}" alt="Business Card Preview">`;
+
+      // Add "active" class so that the priority fields shift upward and their labels change color.
+      if (priorityFields) {
+        priorityFields.classList.add('active');
+      }
+
       state.processing = true;
       updateUI();
-      flashSignature(interestInput); // also flash the textarea
+      flashSignature(interestInput); // flash the textarea with our signature color
+
       const reader = new FileReader();
       reader.onload = (event) => {
         state.formData.uploadedImage = event.target.result;
         // Simulate API call and response
-        fetch('https://run8n.xyz/webhook/storeBusinesCard', {
+        fetch('https://run8n.xyz/webhook/businesCard', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ uploadedImage: state.formData.uploadedImage })
@@ -159,18 +176,18 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
           console.log("API response received:", data);
-          // Assume data is an array with one object where detection may succeed or fail.
+          // Assume data is an array with one object; if detection fails for a field, result will be empty.
           if (Array.isArray(data) && data.length > 0) {
             const result = data[0];
-            updateFieldStatus(nameInput, result.name || "");
+            updateFieldStatus(nameInput, result.name || "", true);
             state.formData.name = result.name || "";
-            updateFieldStatus(phoneInput, result.phone || "");
+            updateFieldStatus(phoneInput, result.phone || "", true);
             state.formData.phone = result.phone || "";
-            updateFieldStatus(emailInput, result.email || "");
+            updateFieldStatus(emailInput, result.email || "", true);
             state.formData.email = result.email || "";
-            updateFieldStatus(companyInput, result.company || "");
+            updateFieldStatus(companyInput, result.company || "", true);
             state.formData.company = result.company || "";
-            updateFieldStatus(positionInput, result.position || "");
+            updateFieldStatus(positionInput, result.position || "", true);
             state.formData.position = result.position || "";
           }
         })
@@ -185,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.readAsDataURL(file);
     }
   });
-
+  
   // UI update function
   function updateUI() {
     if (state.processing) {
@@ -207,19 +224,17 @@ document.addEventListener('DOMContentLoaded', () => {
       thankyouModal.classList.add('hidden');
     }
   }
-
+  
   // Handle form submission.
   businessForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Check required fields. If any are missing/invalid, mark them and scroll to the first.
     const { valid, missingElements } = validateRequiredFields();
     if (!valid) {
       missingElements[0].scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
 
-    // Open modal immediately and proceed with submission.
     state.submitted = true;
     updateUI();
 
@@ -238,10 +253,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error("Error during final form submission:", error);
     }
     
-    // Redirect immediately after the API call finishes.
     window.location.href = "https://rehub.team";
   });
-
+  
   // Handle closing the thank-you modal and resetting the form.
   if (closeModal) {
     closeModal.addEventListener('click', () => {
@@ -270,6 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
       updateUI();
     });
   }
-
+  
   updateUI();
 });

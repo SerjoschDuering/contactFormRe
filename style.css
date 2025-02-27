@@ -359,3 +359,7 @@ select {
   outline: none;
   margin-top: 5px;
 }
+
+.priority-fields.active label {
+  color: var(--primary-color);
+}
