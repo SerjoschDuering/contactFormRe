@@ -78,9 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function validateRequiredFields() {
     const requiredFields = [
       { element: nameInput, label: "Name" },
-      { element: companyInput, label: "Unternehmen" },
       { element: phoneInput, label: "Handynummer" },
-      { element: emailInput, label: "E‑Mail" }
+      { element: emailInput, label: "E‑Mail" },
+      { element: companyInput, label: "Unternehmen" },
+      { element: positionInput, label: "Position" }
     ];
     let valid = true;
     const missingElements = [];
