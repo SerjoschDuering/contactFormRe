@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error("Error during final form submission:", error);
     }
     
-    window.location.href = "https://rehub.team";
+    window.location.href = "https://rehub.software";
   });
   
   // Handle closing the thank-you modal and resetting the form.
@@ -276,8 +276,14 @@ document.addEventListener('DOMContentLoaded', () => {
         company: "",
         position: "",
         tags: [],
-        contacted: ""
+        contacted: "",
+        id: pageId 
       };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const pageId = urlParams.get("id") || "none";
+      state.formData.id = pageId;
+
       tagElements.forEach(tagEl => tagEl.classList.remove('active'));
       if (priorityFields) {
         priorityFields.classList.remove('active');
