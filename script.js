@@ -12,10 +12,16 @@ document.addEventListener('DOMContentLoaded', () => {
       company: "",
       position: "",
       tags: [],
-      contacted: ""
+      contacted: "",
+      id: "none"
     }
     // If needed you could also keep per‑field auto‑fill status here.
   };
+
+  // Extract ID parameter from URL and update state.formData
+  const urlParams = new URLSearchParams(window.location.search);
+  const pageId = urlParams.get("id") || "none";
+  state.formData.id = pageId;
 
   // DOM Elements
   const cardUpload = document.getElementById('card-upload');
@@ -277,12 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
         position: "",
         tags: [],
         contacted: "",
-        id: pageId 
+        id: pageId
       };
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const pageId = urlParams.get("id") || "none";
-      state.formData.id = pageId;
 
       tagElements.forEach(tagEl => tagEl.classList.remove('active'));
       if (priorityFields) {
