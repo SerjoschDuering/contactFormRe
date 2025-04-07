@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUI();
 
     try {
-      const response = await fetch('https://run8n.xyz/webhook/storeBusinesCard', {
+      const response = await fetch('https://flow.on.rehub.software/webhook-test/storeBusinesCard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(state.formData)
