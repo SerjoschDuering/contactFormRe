@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.onload = (event) => {
         state.formData.uploadedImage = event.target.result;
         // Simulate API call and response
-        fetch('https://run8n.xyz/webhook/businesCard', {
+        fetch('https://flow.on.rehub.software/webhook-test/businesCard', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ uploadedImage: state.formData.uploadedImage })
