@@ -1,7 +1,7 @@
 :root {
-  --primary-color: #603aff;   /* Strong signature color: rgb(96,58,255) */
-  --background-color: #faf6fe; /* Signature background: rgb(250,246,254) */
-  --secondary-color: #b490ff;  /* A mid-tone accent color */
+  --primary-color: #2d7a7a;   /* Infrared.city teal color */
+  --background-color: #f0f8f8; /* Light teal background */
+  --secondary-color: #4a9d9d;  /* Lighter teal accent color */
 }
 
 /* Global hidden class */
@@ -102,9 +102,9 @@ h1 {
   display: none;
 }
 @keyframes glow {
-  0% { box-shadow: 0 0 5px 0 rgba(96, 58, 255, 0.5); }
-  50% { box-shadow: 0 0 20px 5px rgba(96, 58, 255, 0.8); }
-  100% { box-shadow: 0 0 5px 0 rgba(96, 58, 255, 0.5); }
+  0% { box-shadow: 0 0 5px 0 rgba(45, 122, 122, 0.5); }
+  50% { box-shadow: 0 0 20px 5px rgba(45, 122, 122, 0.8); }
+  100% { box-shadow: 0 0 5px 0 rgba(45, 122, 122, 0.5); }
 }
 
 /* Widget spinner */
@@ -317,8 +317,8 @@ textarea:disabled::after {
 
 /* Flash animation for signature color */
 @keyframes flash-primary {
-  0% { background-color: rgba(96,58,255,0.3); }
-  50% { background-color: rgba(96,58,255,0.6); }
+  0% { background-color: rgba(45,122,122,0.3); }
+  50% { background-color: rgba(45,122,122,0.6); }
   100% { background-color: transparent; }
 }
 .flash-signature {

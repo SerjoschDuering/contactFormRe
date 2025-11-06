@@ -1,18 +1,54 @@
-This is a simple website to submit a contact for with the addition of an optional image upload for business cars the image will be processed externally by ai (takes 15 seconds). While waiting for the resutls (auto filling of form) the user can start filling out the free text section. Ther should be loading/blocking animatio indicator after the image was uploaded for all fields exepct the free text  and topic/ selector. 
-After the AI generated data returned, the form fields are filled as good as possible, nowt he suer can contiue filling them out or adjsuting if all required fields are full they can hit submit. 
+# Infrared.city Contact Form
 
-It should be mobile friend/ first for cellphones but flexible sclaing 
+A modern, mobile-first contact form for Infrared.city with AI-powered business card scanning capabilities.
 
-Initial Screen (Header & Upload)
-Header: Displays a title (e.g., “Business Card Submission”) along with a logo placeholder.
-Image Upload: A large, mobile‐friendly button (with a business card icon) lets the user upload/take a picture of their business card. Once the image is captured, a preview thumbnail is shown.
-Processing Indicator: When an image is uploaded, the app immediately sends the image to an n8n workflow for parsing. A floating spinner (or similar indicator) appears to inform the user that the image is being processed.
-Manual Input Section
-Separator: A horizontal separator with “--OR--” clearly shows that users can enter data manually.
-Form Fields: Easy-to-read inputs for Name, Facility Name, Phone, eMail, Company, and Position.
-Additional Inputs: Selectable tags (to categorize or add keywords) and a free text area for any extra notes.
-Interest Section: While the image is being processed, a section (placed at the top of the manual area) prompts users to quickly fill out what they were interested in or the discussion topic.
-Data Update & Submission
-Auto-Fill Update: When the n8n endpoint returns the parsed data, the form’s JSON is updated—auto-filling any matching fields so that the user can review and make adjustments.
-Final Submission: On tapping the large “Submit” button, the entire JSON object (which now contains both the auto-filled and manually entered data) is sent to another n8n workflow.
-Feedback Modal: After submission, the user sees a modal with a green checkmark and a thank-you message.
+## Overview
+
+This contact form allows visitors to quickly share their information with the Infrared.city team by either uploading a business card image (which is automatically parsed by AI) or by manually entering their details. The form is optimized for mobile devices and provides real-time feedback during data processing.
+
+## Features
+
+### Smart Business Card Scanning
+- Upload or capture a business card photo
+- AI automatically extracts: Name, Phone, Email, Company, and Position
+- Processing takes approximately 15 seconds
+- Visual feedback with loading indicators
+
+### Intelligent Form Behavior
+- **Auto-fill**: When AI processing completes, form fields are automatically populated
+- **Manual Override**: Users can review and adjust any auto-filled information
+- **Flexible Input**: Users can skip the business card upload and manually enter all details
+
+### Topic Selection
+- Pre-defined tags for quick conversation context:
+  - Environmental Simulation
+  - Sustainable Design
+  - AI Analysis
+  - Climate Modeling
+  - Design Optimization
+  - Consulting
+  - Platform Integration
+
+### Mobile-First Design
+- Responsive layout optimized for smartphones
+- Touch-friendly interface elements
+- Scales beautifully across all device sizes
+
+## Technical Details
+
+### n8n Webhook Integration
+- **Business Card Processing**: `https://run8n.xyz/webhook/businesCard`
+- **Form Submission**: `https://run8n.xyz/webhook/storeBusinesCard`
+
+### User Flow
+1. **Initial Screen**: Shows Infrared.city logo and upload button
+2. **Image Upload** (optional): User uploads business card → AI processing begins
+3. **Conversation Notes**: While waiting, user can describe their discussion topics
+4. **Auto-Fill**: Parsed data populates form fields with visual feedback
+5. **Review & Submit**: User reviews/adjusts information and submits
+6. **Confirmation**: Thank you modal appears, redirects to infrared.city
+
+### Branding
+- **Primary Color**: #2d7a7a (Teal)
+- **Background**: #f0f8f8 (Light Teal)
+- **Logo**: infrared_logo.jpg

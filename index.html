@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Business Card Submission</title>
+  <title>Infrared.city Contact Form</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <!-- Branding Header -->
     <header class="header">
-      <img src="rehubLogo.jpg" alt="Rehub Logo" class="logo">
-      <h1 class="title">Stay in touch with us!</h1>
+      <img src="infrared_logo.jpg" alt="Infrared.city Logo" class="logo">
+      <h1 class="title">Let's connect!</h1>
     </header>
 
     <!-- Upload Section -->
@@ -34,63 +34,72 @@
 
     <!-- Manual Input Form -->
     <form id="business-form">
-      <!-- Priority Container: Gesprächsnotizen & Interessensauswahl -->
+      <!-- Priority Container: Conversation Notes & Topic Selection -->
       <div id="priority-container">
         <div id="priority-prompt" class="priority-prompt"></div>
         <div id="priority-fields" class="priority-fields">
           <div class="form-group">
-            <label for="interest">Worüber waren wir im Gespräch?</label>
-            <textarea id="interest" name="interest" placeholder="Wie sind wir verblieben? Was sollten wir bei unserem nächsten Kontakt berücksichtigen?"></textarea>
+            <label for="interest">What did we discuss?</label>
+            <textarea id="interest" name="interest" placeholder="What topics came up? What should we remember for our next conversation?"></textarea>
           </div>
           <!-- Subtle heading for selectable options -->
           <p class="options-heading"></p>
           <div class="tags">
-            <span class="tag" data-tag="rehuh_nutzung">Rehub Nutzung</span>
-            <span class="tag" data-tag="rehuh_integration">Rehub Integration</span>
-            <span class="tag" data-tag="modulbaugenerator">Modulbaugenerator</span>
-            <span class="tag" data-tag="customized_entwicklung">Customized Entwicklung</span>
-            <span class="tag" data-tag="datenmodelle">Datenmodelle / KI-Szenarien</span>
-            <span class="tag" data-tag="beratung_prozesse">Beratung Prozesse</span>
-            <span class="tag" data-tag="beratung_digitalisierung">Beratung Digitalisierung</span>
+            <span class="tag" data-tag="using_webapp">Using Webapp</span>
+            <span class="tag" data-tag="plugin_integration">Plugin Integration</span>
+            <span class="tag" data-tag="custom_solution">Custom Solution</span>
+            <span class="tag" data-tag="municipality">Municipality</span>
+            <span class="tag" data-tag="architecture_firm">Architecture Firm</span>
+            <span class="tag" data-tag="developer">Developer</span>
+            <span class="tag" data-tag="project_based">Project Based</span>
+            <span class="tag" data-tag="consulting">Consulting</span>
           </div>
         </div>
       </div>
 
       <!-- Other Manual Fields -->
       <div id="other-fields">
-        <!-- Moved "Mit wem haben Sie gesprochen?" to top -->
+        <!-- Contact person selection -->
         <div class="form-group">
-          <label for="contacted">Mit wem haben Sie gesprochen?</label>
+          <label for="contacted">Who did you speak with?</label>
           <select id="contacted" name="contacted">
-            <option value="" disabled selected>Bitte auswählen</option>
-            <option value="Timo Schroeder">Timo Schroeder</option>
-            <option value="Melanie Eiselein">Melanie Eiselein</option>
-            <option value="Josephine Pleuser">Josephine Pleuser</option>
-            <option value="Elisa Lublasser">Elisa Lublasser</option>
-            <option value="Christopher Yelegen">Christopher Yelegen</option>
-            <option value="Iuliia Osintseva">Iuliia Osintseva</option>
-            <option value="Serjoscha Düring">Serjoscha Düring</option>
+            <option value="" disabled selected>Please select</option>
+            <option value="Angelos Chronis">Angelos Chronis</option>
+            <option value="Oana Taut">Oana Taut</option>
+            <option value="Theodoros Galanos">Theodoros Galanos</option>
+            <option value="Christos Chatzakis">Christos Chatzakis</option>
+            <option value="Eduardo Iñigo">Eduardo Iñigo</option>
+            <option value="Vasiliki Fragkia">Vasiliki Fragkia</option>
+            <option value="Kaushik L.S">Kaushik L.S</option>
+            <option value="Ruben Guedes">Ruben Guedes</option>
+            <option value="Alessandro Grossi">Alessandro Grossi</option>
+            <option value="Daniel Lepold">Daniel Lepold</option>
+            <option value="Josef Wienerroither">Josef Wienerroither</option>
+            <option value="Sezin Genc">Sezin Genc</option>
+            <option value="Khrystyna Vasko">Khrystyna Vasko</option>
+            <option value="Claudio Alanis">Claudio Alanis</option>
+            <option value="Marianna de Souza">Marianna de Souza</option>
           </select>
         </div>
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Ihr Name">
+          <input type="text" id="name" name="name" placeholder="Your name">
         </div>
         <div class="form-group">
-          <label for="phone">Handynummer</label>
-          <input type="tel" id="phone" name="phone" placeholder="Ihre Handynummer">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Your phone number">
         </div>
         <div class="form-group">
-          <label for="email">E-Mail</label>
-          <input type="email" id="email" name="email" placeholder="Ihre E-Mail-Adresse">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Your email address">
         </div>
         <div class="form-group">
-          <label for="company">Unternehmen</label>
-          <input type="text" id="company" name="company" placeholder="Ihr Unternehmen">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" placeholder="Your company">
         </div>
         <div class="form-group">
           <label for="position">Position</label>
-          <input type="text" id="position" name="position" placeholder="Ihre Position">
+          <input type="text" id="position" name="position" placeholder="Your position">
         </div>
       </div>
       <button type="submit" class="submit-button">Submit</button>
@@ -102,8 +111,8 @@
   <!-- Thank You Modal -->
   <div id="thankyou-modal" class="modal hidden">
     <div class="modal-content">
-      <img src="rehubLogo.jpg" alt="Rehub Logo" class="modal-logo">
-      <p>Thank you for submitting!</p>
+      <img src="infrared_logo.jpg" alt="Infrared.city Logo" class="modal-logo">
+      <p>Thank you for connecting with us!</p>
     </div>
   </div>
 

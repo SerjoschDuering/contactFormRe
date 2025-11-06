@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
       reader.onload = (event) => {
         state.formData.uploadedImage = event.target.result;
         // Simulate API call and response
-        fetch('https://flow.on.rehub.software/webhook/businesCard', {
+        fetch('https://run8n.xyz/webhook/businesCard', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ uploadedImage: state.formData.uploadedImage })
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateUI();
 
     try {
-      const response = await fetch('https://flow.on.rehub.software/webhook/storeBusinesCard', {
+      const response = await fetch('https://run8n.xyz/webhook/storeBusinesCard', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(state.formData)
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error("Error during final form submission:", error);
     }
     
-    window.location.href = "https://rehub.software";
+    window.location.href = "https://infrared.city";
   });
   
   // Handle closing the thank-you modal and resetting the form.
